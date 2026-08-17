@@ -42,25 +42,58 @@ public class AppConfig {
 	
     // CORS Configuration
     private CorsConfigurationSource corsConfigurationSource() {
-        return new CorsConfigurationSource() {
-            @Override
-            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                CorsConfiguration cfg = new CorsConfiguration();
-                cfg.setAllowedOrigins(Arrays.asList(
-                    "http://localhost:3000",
-                 //   "https://zosh-food.vercel.app",
-                " https://foodie-wala-six.vercel.app/"
-                   // "http://localhost:4200"
-                ));
-                cfg.setAllowedMethods(Collections.singletonList("*"));
-                cfg.setAllowCredentials(true);
-                cfg.setAllowedHeaders(Collections.singletonList("*"));
-                cfg.setExposedHeaders(Arrays.asList("Authorization"));
-                cfg.setMaxAge(3600L);
-                return cfg;
-            }
-        };
-    }
+    return new CorsConfigurationSource() {
+        @Override
+        public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+
+            CorsConfiguration cfg = new CorsConfiguration();
+
+            cfg.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000",
+                "https://foodie-wala-31rifvkyi-morpals-projects.vercel.app"
+            ));
+
+            cfg.setAllowedMethods(Arrays.asList(
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "PATCH",
+                "OPTIONS"
+            ));
+
+            cfg.setAllowCredentials(true);
+
+            cfg.setAllowedHeaders(Collections.singletonList("*"));
+
+            cfg.setExposedHeaders(Arrays.asList("Authorization"));
+
+            cfg.setMaxAge(3600L);
+
+            return cfg;
+        }
+    };
+}
+    // private CorsConfigurationSource corsConfigurationSource() {
+    //     return new CorsConfigurationSource() {
+    //         @Override
+    //         public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+    //             CorsConfiguration cfg = new CorsConfiguration();
+    //             cfg.setAllowedOrigins(Arrays.asList(
+    //                 "http://localhost:3000",
+    //              //   "https://zosh-food.vercel.app",
+    //             " https://foodie-wala-six.vercel.app/"
+    //                // "http://localhost:4200"
+    //             ));
+    //             cfg.setAllowedMethods(Collections.singletonList("*"));
+    //             cfg.setAllowCredentials(true);
+    //             cfg.setAllowedHeaders(Collections.singletonList("*"));
+    //             cfg.setExposedHeaders(Arrays.asList("Authorization"));
+    //             cfg.setMaxAge(3600L);
+    //             return cfg;
+    //         }
+    //     };
+    // }
 
     @Bean
     PasswordEncoder passwordEncoder() {
