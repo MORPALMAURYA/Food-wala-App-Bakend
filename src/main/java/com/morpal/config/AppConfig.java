@@ -49,7 +49,8 @@ public class AppConfig {
                 cfg.setAllowedOrigins(Arrays.asList(
                     "http://localhost:3000",
                  //   "https://zosh-food.vercel.app",
-                    "http://localhost:4200"
+                " https://foodie-wala-six.vercel.app/"
+                   // "http://localhost:4200"
                 ));
                 cfg.setAllowedMethods(Collections.singletonList("*"));
                 cfg.setAllowCredentials(true);
