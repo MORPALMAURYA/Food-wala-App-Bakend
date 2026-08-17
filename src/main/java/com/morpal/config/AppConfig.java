@@ -21,24 +21,39 @@ import jakarta.servlet.http.HttpServletRequest;
 @EnableWebSecurity
 public class AppConfig {
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+@Bean
+SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(Authorize -> Authorize
-                		.requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_OWNER","ADMIN")
-                                .requestMatchers("/api/**").authenticated()
-                                
-                                .anyRequest().permitAll()
-                )
-                .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
-                .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()));
-               
-		
-		return http.build();
-		
-	}
+    http
+        .sessionManagement(management ->
+            management.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        )
+        .authorizeHttpRequests(auth -> auth
+
+            // Login / Registration - without authentication
+            .requestMatchers("/api/auth/**").permitAll()
+
+            // Admin APIs
+            .requestMatchers("/api/admin/**")
+            .hasAnyRole("RESTAURANT_OWNER", "ADMIN")
+
+            // Other APIs require JWT
+            .requestMatchers("/api/**")
+            .authenticated()
+
+            .anyRequest().permitAll()
+        )
+        .addFilterBefore(
+            new JwtTokenValidator(),
+            BasicAuthenticationFilter.class
+        )
+        .csrf(csrf -> csrf.disable())
+        .cors(cors ->
+            cors.configurationSource(corsConfigurationSource())
+        );
+
+    return http.build();
+}
 	
     // CORS Configuration
 //     private CorsConfigurationSource corsConfigurationSource() {
